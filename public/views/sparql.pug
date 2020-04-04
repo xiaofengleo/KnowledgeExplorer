@@ -1,6 +1,7 @@
-div(ng-show="main.tool == 'sparql'", ng-controller="SparqlCtrl as ctrl")
+div(ng-show="main.tool == 'sparql'", ng-controller="SparqlCtrl as ctrl", ng-service="netGraphService as netGraph")
   h3(style="text-align: center;", ng-click="ctrl.updateQuery()") Sparql queries
-  i.ml-3.fa.fa-cog(ng-click='main.log.download()')
+  i.ml-3.fa.fa-cog(ng-click='main.netGraph.hi()')
+  //i.ml-3.fa.fa-cog(ng-click='main.log.download()')
   hr(style="margin: 3px 0px;")
 
   h4(ng-if="ctrl.queries.length==0") Current configuration generates no queries!

@@ -1,9 +1,9 @@
 angular.module('rdfvis.controllers').controller('DescribeCtrl', DescribeCtrl);
 
 DescribeCtrl.$inject = ['$scope', 'propertyGraphService', 'queryService', 'requestService', 'settingsService',
-'logService'];
+'logService','netGraphService'];
 
-function DescribeCtrl ($scope, pGraph, query, request, settings, log) {
+function DescribeCtrl ($scope, pGraph, query, request, settings, log, netGraph) {
   var vm = this;
   var cfg = settings.describe;
   var cache = [];

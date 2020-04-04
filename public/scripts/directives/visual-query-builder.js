@@ -804,16 +804,16 @@ function visualQueryBuilder (pGraph) {
     /** MAIN SVG **/
     var svg = d3.select(element[0]).append("svg")
           .attr("id", "d3vqb")
-          //.attr("width", element[0].offsetWidth/4)
+          //.attr("width", element[0].offsetWidth)
           //.attr("height", element[0].offsetHeight)
-	  .attr("style", "position: absolute; left: 300px; top: 0px; width: 480px;  height: 800px; background: white");
+	  .attr("style", "position: absolute; left: 300px; top: 0px; width: 480px;  height: 800px; background: red");
 
 
 
 
 
-//alert(element[0].innerHTML);
-//alert(element[0].style);
+alert(element[0].innerHTML);
+alert(element[0].style);
     var graph = new GraphCreator(svg, pGraph.nodes, pGraph.edges);
     graph.updateGraph();
     pGraph.connect(element[0], graph);

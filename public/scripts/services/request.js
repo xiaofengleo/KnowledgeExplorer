@@ -25,6 +25,11 @@ function requestService (settings, $http, $timeout) {
   var delay = 100;   //delay between concurrent request
   var running = 0;  //number of concurrent request
 
+function hello()
+{
+alert('hello');
+}
+
   /* Create get URL form */
   function toForm (obj) {
     var str = [];

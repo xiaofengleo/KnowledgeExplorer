@@ -1,9 +1,9 @@
 angular.module('rdfvis.controllers').controller('MainCtrl', MainCtrl);
 
 MainCtrl.$inject = ['$scope', 'propertyGraphService', 'queryService', 'requestService', '$timeout', '$http',
-'logService', '$uibModal', '$animate'];
+'logService', '$uibModal', '$animate','netGraphService'];
 
-function MainCtrl ($scope, pGraph, query, request, $timeout, $http, log, $uibModal, $animate ) {
+function MainCtrl ($scope, pGraph, query, request, $timeout, $http, log, $uibModal, $animate , netGraph) {
   var vm = this;
   /* General stuff */
   vm.tool = 'none';
@@ -14,7 +14,8 @@ function MainCtrl ($scope, pGraph, query, request, $timeout, $http, log, $uibMod
   vm.modalHelp = modalHelp;
   vm.graph = pGraph;
   vm.log = log;
-
+  vm.netGraph = netGraph;
+alert(netGraph);
   /* vars */
   vm.searchInput = null;
   vm.searchResults = [];
