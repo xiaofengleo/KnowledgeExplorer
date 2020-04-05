@@ -1,3 +1,7 @@
+# Knowledge Explorer
+This is based on 'RDF Rxplorer", a network graph visualization is added to display the result of sparql query result.
+
+
 # RDFExplorer
 SPARQL visual query builder and RDF explorer
 
