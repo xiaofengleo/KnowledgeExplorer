@@ -2,7 +2,6 @@ angular.module('rdfvis.directives').directive('visualQueryBuilder', visualQueryB
 
 visualQueryBuilder.$inject = ['propertyGraphService'];
 
-
 function visualQueryBuilder (pGraph) {
   var directive = {
     link: link,
@@ -10,9 +9,7 @@ function visualQueryBuilder (pGraph) {
     scope: {
     },
   };
-
   return directive;
-
 
   function link (scope, element, attrs) {
     var borderRadius = 6;
@@ -108,7 +105,7 @@ function visualQueryBuilder (pGraph) {
       thisGraph.circles = svgG.append("g").classed(thisGraph.classes.allNodes, true).selectAll("g");
       thisGraph.paths   = svgG.append("g").classed(thisGraph.classes.allEdges, true).selectAll("g");
 
-      thisGraph.drag = d3version3.behavior.drag()
+      thisGraph.drag = d3.behavior.drag()
           .origin(function(d){ return {x: d.x, y: d.y}; })
           .on("drag", function(args){
             thisGraph.state.justDragged = true;
@@ -118,20 +115,10 @@ function visualQueryBuilder (pGraph) {
             // todo check if edge-mode is selected
           });
 
-//thisGraph.drag = d3version3.drag()
-//     .subject(subject)
-//     .on("start", function () {
-//         d3version3.event.sourceEvent.stopPropagation(); // silence other listeners
-//         if (d3version3.event.sourceEvent.which == 1)
-//             dragInitiated = true;
-//     });
-
-
-//function subject(d) {return { x: 0, y: d3version3.event.y }};
       // listen for key events TODO FIXME
-//      d3version3.select(element[0])
-//          .on("keydown", function(){ thisGraph.svgKeyDown.call(thisGraph); })
-//          .on("keyup", function(){ thisGraph.svgKeyUp.call(thisGraph); });
+      d3.select(element[0])
+          .on("keydown", function(){ thisGraph.svgKeyDown.call(thisGraph); })
+          .on("keyup", function(){ thisGraph.svgKeyUp.call(thisGraph); });
 
       svg.on("mousedown", function (d) {thisGraph.svgMouseDown.call(thisGraph, d);});
       svg.on("mouseup",   function (d) {thisGraph.svgMouseUp.call(thisGraph, d);});
@@ -139,14 +126,14 @@ function visualQueryBuilder (pGraph) {
       svg.on("mouseout",  function (d) {thisGraph.focused = false;});
       svg.on("contextmenu", function () {
         //Do no show context menu, the default menu can break the tools ouside the svg.
-        //d3version3.event.preventDefault();
+        //d3.event.preventDefault();
         gMenu();
       });
 
       // listen for dragging
-      var dragSvg = d3version3.behavior.zoom()
+      var dragSvg = d3.behavior.zoom()
           .on("zoom", function () {
-            if (d3version3.event.sourceEvent.shiftKey) {
+            if (d3.event.sourceEvent.shiftKey) {
               return false;
             } else {
               thisGraph.zoomed.call(thisGraph);
@@ -154,10 +141,10 @@ function visualQueryBuilder (pGraph) {
             return true;
           })
           .on("zoomstart", function(){
-            if (!d3version3.event.sourceEvent.shiftKey) d3version3.select('body').style("cursor", "move");
+            if (!d3.event.sourceEvent.shiftKey) d3.select('body').style("cursor", "move");
           })
           .on("zoomend", function(){
-            d3version3.select('body').style("cursor", "auto");
+            d3.select('body').style("cursor", "auto");
           });
 
       svg.call(dragSvg).on("dblclick.zoom", null)
@@ -194,15 +181,15 @@ function visualQueryBuilder (pGraph) {
       nodeRadius: 20
     };
 
-    GraphCreator.prototype.dragmove = function (d) { //META: d3version3.behavior.drag()
+    GraphCreator.prototype.dragmove = function (d) { //META: d3.behavior.drag()
       var thisGraph = this;
       if (thisGraph.state.shiftNodeDrag){
         thisGraph.dragLine.attr(
-            'd', 'M' + d.x + ',' + d.y + 'L' + d3version3.mouse(thisGraph.svgG.node())[0] +
-            ',' + d3version3.mouse(this.svgG.node())[1]);
+            'd', 'M' + d.x + ',' + d.y + 'L' + d3.mouse(thisGraph.svgG.node())[0] +
+            ',' + d3.mouse(this.svgG.node())[1]);
       } else {
-        d.x += d3version3.event.dx;
-        d.y += d3version3.event.dy;
+        d.x += d3.event.dx;
+        d.y += d3.event.dy;
         thisGraph.updateGraph();
       }
     };
@@ -255,7 +242,7 @@ function visualQueryBuilder (pGraph) {
     GraphCreator.prototype.pathMouseDown = function (d3path, d) { //META: updategraph
       var thisGraph = this,
           state = thisGraph.state;
-      d3version3.event.stopPropagation();
+      d3.event.stopPropagation();
       state.mouseDownLink = d;
       
       if (state.selectedNode){
@@ -274,10 +261,10 @@ function visualQueryBuilder (pGraph) {
     GraphCreator.prototype.circleMouseDown = function (d3node, d) { //META: updategraph
       var thisGraph = this,
           state = thisGraph.state;
-      d3version3.event.stopPropagation();
+      d3.event.stopPropagation();
       state.mouseDownNode = d;
-      if (d3version3.event.shiftKey){
-        state.shiftNodeDrag = d3version3.event.shiftKey;
+      if (d3.event.shiftKey){
+        state.shiftNodeDrag = d3.event.shiftKey;
         // reposition dragged directed edge
         thisGraph.dragLine.classed('hidden', false)
           .attr('d', 'M' + d.x + ',' + d.y + 'L' + d.x + ',' + d.y);
@@ -312,7 +299,7 @@ function visualQueryBuilder (pGraph) {
           state.justDragged = false;
         } else{
           // clicked, not dragged
-          if (d3version3.event.shiftKey){
+          if (d3.event.shiftKey){
             /* shift-clicked node: do something TODO */
           } else {
             if (state.selectedEdge){
@@ -344,10 +331,10 @@ function visualQueryBuilder (pGraph) {
       if (state.justScaleTransGraph) {
         // dragged not clicked
         state.justScaleTransGraph = false;
-      } else if (state.graphMouseDown && d3version3.event.shiftKey){
+      } else if (state.graphMouseDown && d3.event.shiftKey){
         // clicked not dragged from svg
         /* Here we create a new variable */
-        var xycoords = d3version3.mouse(thisGraph.svgG.node()),
+        var xycoords = d3.mouse(thisGraph.svgG.node()),
             d = pGraph.addNode();
         d.setPosition(xycoords[0],xycoords[1]);
         d.onClick();
@@ -370,14 +357,14 @@ function visualQueryBuilder (pGraph) {
       // make sure repeated key presses don't register for each keydown
       if(state.lastKeyDown !== -1) return;
 
-      state.lastKeyDown = d3version3.event.keyCode;
+      state.lastKeyDown = d3.event.keyCode;
       var selectedNode = state.selectedNode,
           selectedEdge = state.selectedEdge;
 
-      switch(d3version3.event.keyCode) {
+      switch(d3.event.keyCode) {
       case keys.BACKSPACE_KEY:
       case keys.DELETE_KEY:
-        d3version3.event.preventDefault();
+        d3.event.preventDefault();
         if (selectedNode){
           thisGraph.nodes.splice(thisGraph.nodes.indexOf(selectedNode), 1);
           thisGraph.spliceLinksForNode(selectedNode);
@@ -396,10 +383,10 @@ function visualQueryBuilder (pGraph) {
       this.state.lastKeyDown = -1;
     };
 
-    GraphCreator.prototype.zoomed = function () { //META: d3version3.behavior.zoom()
+    GraphCreator.prototype.zoomed = function () { //META: d3.behavior.zoom()
       this.state.justScaleTransGraph = true;
-      d3version3.select("." + this.classes.graph)
-        .attr("transform", "translate(" + d3version3.event.translate + ") scale(" + d3version3.event.scale + ")");
+      d3.select("." + this.classes.graph)
+        .attr("transform", "translate(" + d3.event.translate + ") scale(" + d3.event.scale + ")");
     };
 
     GraphCreator.prototype.getZoom = function () { //META: menu()
@@ -468,7 +455,7 @@ function visualQueryBuilder (pGraph) {
         .classed("link", true)
         .attr("d", function(d){ return thisGraph.drawArrow(d.source, d.target); })
         .on("mousedown", function(d){
-          thisGraph.pathMouseDown.call(thisGraph, d3version3.select(this), d);
+          thisGraph.pathMouseDown.call(thisGraph, d3.select(this), d);
         })
         .on("mouseup", function(d){ state.mouseDownLink = null; });
 
@@ -497,10 +484,10 @@ function visualQueryBuilder (pGraph) {
 
       newGs.classed(classes.node, true)
         .attr("transform", function(d){return "translate(" + d.x + "," + d.y + ")";})
-        .on("mouseover", function(d){ if (state.shiftNodeDrag){ d3version3.select(this).classed(classes.connect, true); }})
-        .on("mouseout",  function(d){ d3version3.select(this).classed(classes.connect, false); })
-        .on("mousedown", function(d){ thisGraph.circleMouseDown.call(thisGraph, d3version3.select(this), d); })
-        .on("mouseup",   function(d){ thisGraph.circleMouseUp.call(thisGraph, d3version3.select(this), d); })
+        .on("mouseover", function(d){ if (state.shiftNodeDrag){ d3.select(this).classed(classes.connect, true); }})
+        .on("mouseout",  function(d){ d3.select(this).classed(classes.connect, false); })
+        .on("mousedown", function(d){ thisGraph.circleMouseDown.call(thisGraph, d3.select(this), d); })
+        .on("mouseup",   function(d){ thisGraph.circleMouseUp.call(thisGraph, d3.select(this), d); })
         .on("click",     function(d){
             if (state.clickedProperty) state.clickedProperty = false;
             else d.onClick();
@@ -534,7 +521,7 @@ function visualQueryBuilder (pGraph) {
 
       // Properties
       thisGraph.circles.each(function (d, i) {
-        var sel = d3version3.select(this).selectAll('.' + classes.properties);
+        var sel = d3.select(this).selectAll('.' + classes.properties);
         var props = sel.selectAll('g').data(d.properties, function (p) {return p.id;});
         //UPDATE
         props.selectAll('.' + classes.propRect)
@@ -639,17 +626,17 @@ function visualQueryBuilder (pGraph) {
 
       function menu(obj) {
         var z = graph.getZoom();
-        var xycoords = d3version3.mouse(graph.svgG.node());
+        var xycoords = d3.mouse(graph.svgG.node());
         var x = (xycoords[0] + z[0]);
         var y = (xycoords[1] + z[1]);
-        d3version3.event.preventDefault();
-        d3version3.event.stopPropagation();
+        d3.event.preventDefault();
+        d3.event.stopPropagation();
 
-        d3version3.select('.context-menu').remove();
+        d3.select('.context-menu').remove();
         scaleItems();
 
         // Draw the menu
-        d3version3.select('svg')
+        d3.select('svg')
             .append('g')
             .classed('context-menu', true)
             .selectAll('tmp')
@@ -662,19 +649,19 @@ function visualQueryBuilder (pGraph) {
                 d.func(obj);
               }
               else {
-                d3version3.event.stopPropagation();
+                d3.event.stopPropagation();
               }
             })
             .on('contextmenu', function (d) {
               if (!d.disabled(obj)) {
                 d.func(obj);
               }
-              d3version3.event.preventDefault();
-              d3version3.event.stopPropagation();
-              d3version3.select('.context-menu').remove();
+              d3.event.preventDefault();
+              d3.event.stopPropagation();
+              d3.select('.context-menu').remove();
             });
 
-        d3version3.selectAll('.menu-entry')
+        d3.selectAll('.menu-entry')
             .append('rect')
             .classed('menu-entry-rect', true)
             .attr('x', x)
@@ -682,7 +669,7 @@ function visualQueryBuilder (pGraph) {
             .attr('width', width)
             .attr('height', height);
 
-        d3version3.selectAll('.menu-entry')
+        d3.selectAll('.menu-entry')
             .append('text')
             .classed('menu-entry-text', true)
             .text(function(d){ return d.name; })
@@ -692,8 +679,8 @@ function visualQueryBuilder (pGraph) {
             .attr('dx', margin);
 
         // Other interactions
-        d3version3.select('body')
-            .on('click', function() { d3version3.select('.context-menu').remove(); });
+        d3.select('body')
+            .on('click', function() { d3.select('.context-menu').remove(); });
       }
 
       menu.items = function(e) { //insert items to the menu.
@@ -706,22 +693,22 @@ function visualQueryBuilder (pGraph) {
       // Automatically set width, height, and margin;
       function scaleItems() {
         if (rescale) {
-          d3version3.select('svg').selectAll('tmp')
+          d3.select('svg').selectAll('tmp')
               .data(items).enter()
               .append('text')
               .attr('class', 'menu-entry-text tmp')
               .text(function(d){ return d.name; })
               .attr('x', -1000)
               .attr('y', -1000);
-          var z = d3version3.selectAll('.tmp')[0]
+          var z = d3.selectAll('.tmp')[0]
                     .map(function(x){ return x.getBBox(); });
-          width = d3version3.max(z.map(function(x){ return x.width; }));
+          width = d3.max(z.map(function(x){ return x.width; }));
           margin = margin * width;
           width =  width + 2 * margin;
-          height = d3version3.max(z.map(function(x){ return x.height + margin / 2; }));
+          height = d3.max(z.map(function(x){ return x.height + margin / 2; }));
 
           // cleanup
-          d3version3.selectAll('.tmp').remove();
+          d3.selectAll('.tmp').remove();
           rescale = false;
         }
       }
@@ -734,7 +721,7 @@ function visualQueryBuilder (pGraph) {
       name: 'New variable',
       disabled: () => { return false },
       func: () => {
-        var xycoords = d3version3.mouse(graph.svgG.node()),
+        var xycoords = d3.mouse(graph.svgG.node()),
             d = pGraph.addNode();
         d.setPosition(xycoords[0],xycoords[1]);
         d.onClick();
@@ -747,7 +734,7 @@ function visualQueryBuilder (pGraph) {
       disabled: () => {return !pGraph.getSelected();},
       func: () => {
         var selected = pGraph.getSelected();
-        var xycoords = d3version3.mouse(graph.svgG.node()),
+        var xycoords = d3.mouse(graph.svgG.node()),
             d = pGraph.addNode();
         d.setPosition(xycoords[0],xycoords[1]);
         pGraph.addEdge(selected, d);
@@ -815,11 +802,18 @@ function visualQueryBuilder (pGraph) {
     lMenu.items(meEdit, meRemove);
 
     /** MAIN SVG **/
-    var svg = d3version3.select(element[0]).append("svg")
+    var svg = d3.select(element[0]).append("svg")
           .attr("id", "d3vqb")
-          .attr("width", element[0].offsetWidth)
-          .attr("height", element[0].offsetHeight);
+          //.attr("width", element[0].offsetWidth)
+          //.attr("height", element[0].offsetHeight)
+	  .attr("style", "position: absolute; left: 300px; top: 0px; width: 480px;  height: 800px; background: red");
 
+
+
+
+
+//alert(element[0].innerHTML);
+//alert(element[0].style);
     var graph = new GraphCreator(svg, pGraph.nodes, pGraph.edges);
     graph.updateGraph();
     pGraph.connect(element[0], graph);

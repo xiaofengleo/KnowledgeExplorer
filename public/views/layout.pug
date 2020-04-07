@@ -34,7 +34,8 @@ html(lang="en", ng-app="rdfvis")
     script(src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular-cookies.js")
     script(src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular-animate.js")
     // D3
-    script(src="https://d3js.org/d3.v3.min.js")
+    //script(src="scripts/services/d3.v3.min.js")
+    //script(src="https://d3js.org/d3.v3.min.js")
     // IntroJS
     script(src="https://cdnjs.cloudflare.com/ajax/libs/intro.js/2.9.3/intro.min.js")
     //Ui bootstrap
@@ -59,4 +60,15 @@ html(lang="en", ng-app="rdfvis")
     script(src="scripts/services/property-graph.js")
     script(src="scripts/services/logs.js")
     script(src="scripts/services/kbsite.js")
-    script(src="scripts/services/d3.min.js")
+    //script(src="scripts/services/d3.v5.min.js")
+    script(src='https://cdnjs.cloudflare.com/ajax/libs/d3/5.1.0/d3.js')
+    script.
+      d3version5 = d3
+      window.d3 = null
+    script(src='https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.17/d3.min.js')
+    script.
+      d3version3 = d3
+      window.d3 = null
+      // test it worked
+      console.log('v3', d3version3.version)
+      console.log('v5', d3version5.version)

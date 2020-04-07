@@ -1,7 +1,7 @@
 angular.module('rdfvis.services').factory('propertyGraphService', propertyGraphService);
-propertyGraphService.$inject = ['requestService', 'logService', 'settingsService','netGraphService'];
+propertyGraphService.$inject = ['requestService', 'logService', 'settingsService'];
 
-function propertyGraphService (req, log, settings, netGraph) {
+function propertyGraphService (req, log, settings) {
   var nodeWidth = 220,
       childWidth = 200,
       nodeBaseHeight = 30,

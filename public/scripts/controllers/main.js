@@ -15,7 +15,7 @@ function MainCtrl ($scope, pGraph, query, request, $timeout, $http, log, $uibMod
   vm.graph = pGraph;
   vm.log = log;
   vm.netGraph = netGraph;
-alert(netGraph);
+//alert(netGraph);
   /* vars */
   vm.searchInput = null;
   vm.searchResults = [];

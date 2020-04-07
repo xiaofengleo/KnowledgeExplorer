@@ -22,7 +22,6 @@ function SettingsCtrl (settings, request, query, $http, $scope) {
 
   function getSettings () {
     vm.limit = settings.resultLimit;
-//alert(settings.endpoint);
     vm.endpoint = Object.assign({}, settings.endpoint); //to copy the object.
     vm.class = Object.assign({}, settings.searchClass ); 
   }

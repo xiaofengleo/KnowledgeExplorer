@@ -21,11 +21,9 @@ body, html {
 
 visual-query-builder {
   position:absolute;
-  left:300;
-  right:200;
-  width: 50%;
+  left:0;
+  right:0;
   height: 100%;
-/*background:green;*/
 }
 
 #mid-help {
@@ -170,7 +168,7 @@ visual-query-builder {
   margin-top: 6px;
   padding: 6px 12px 6px 12px;
   overflow-y: scroll;
-  height: calc(40% - (40px));
+  height: calc(100% - (40px));
   transition: all linear 0.5s;
   background-color: rgba(255, 255, 255, 0.75);
   pointer-events: auto;
@@ -190,14 +188,13 @@ visual-query-builder {
 }
 
 /* Right-top tools styles */
-
 #tools {
   position: absolute;
-  left: 780px;
+  right: 10px;
   top: 10px;
-  bottom: 10px;
+  bottom:10px;
   z-index: 20;
-  width: 170px;
+  width: 400px;
   pointer-events: none;
 }
 
@@ -207,7 +204,7 @@ visual-query-builder {
   border-radius: 4px;
   padding: 6px 12px 6px 12px;
   overflow-y: scroll;
-  height: calc(100% - (80px));
+  height: calc(100% - (40px));
   transition: all linear 0.5s;
   background-color: rgba(255, 255, 255, 0.75);
   pointer-events: auto;

@@ -1,9 +1,6 @@
 div(ng-show="main.tool == 'log'")
   h3.ta-center Log
-    label
-      | Open file dialog
-      input(type='file')
-    //i.ml-3.fa.fa-download(ng-click="main.log.download()")
+    i.ml-3.fa.fa-download(ng-click="main.log.download()")
   hr(style="margin: 3px 0px;")
 
   .row(ng-repeat="l in main.log.logs")

@@ -145,7 +145,6 @@ function EditCtrl ($scope, pGraph, $timeout, $q) {
 
   function addSearchAsFilter () { // should work but not used
     var text = vm.resultFilterValue + '';
-alert(text);
     console.log(text);
     var p = vm.selected.getPropByUri("http://www.w3.org/2000/01/rdf-schema#label");
     if (!p) {

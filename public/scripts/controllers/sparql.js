@@ -12,7 +12,6 @@ function SparqlCtrl ($scope, pGraph) {
 
   pGraph.getQueries = updateQueries;
 
-
   function updateQueries () {
     var all = new Set();
     pGraph.nodes.forEach(r => {

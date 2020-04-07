@@ -1,14 +1,16 @@
 angular.module('rdfvis.services').factory('netGraphService',netGraphService);
 netGraphService.$inject = [];
 
+
 function netGraphService () {
 var serv = this;
 serv.logs = [];
 serv.hi=hello;
 
+
 function hello()
 {
-alert("hello");
+//alert("hello");
 //query="SELECT DISTINCT ?subject ?property ?object WHERE  {?subject ?property ?object.}";
 //query="PREFIX rdfs:   <http://www.w3.org/2000/01/rdf-schema#> PREFIX envri: <http://envri.eu/ns/> PREFIX rm: <http://www.oil-e.net/ontology/envri-rm.owl#> PREFIX fairterms: <https://w3id.org/fair/principles/terms/> construct {?subject ?property ?object} WHERE {?subject rdfs:label 'aerosol' .}" ;
 
@@ -37,7 +39,7 @@ var simulations = {};
 
 
 // The colour scheme for graph nodes.
-var color = d3.scaleOrdinal(d3.schemeCategory10);
+var color = d3version5.scaleOrdinal(d3version5.schemeCategory10);
 
 /* Asynchronously submit a SPARQL SELECT query to an end-point.
  *   query : the SPARQL query to submit.
@@ -325,7 +327,7 @@ function displayTableJson(object, target) {
  *   table : the HTML element to write information about selected graph nodes to. */
 function updateVisualiser(visualiser, data) {
     // Select the SVG element (via D3) and get its dimensions.
-    var svg = d3.select("svg#"+visualiser);//,
+    var svg = d3version5.select("svg#"+visualiser);//,
         width = +svg.attr("width"),
         height = +svg.attr("height");
     // Select the SVG element (via DOM).
@@ -365,16 +367,16 @@ function updateVisualiser(visualiser, data) {
         .attr("fill", function(d) { return color(d.group); })
         .attr("fill-opacity", 0.5)
         .on("click", clickedNode)
-        .call(d3.drag()
+        .call(d3version5.drag()
             .on("start", dragstarted)
             .on("drag", dragged)
             .on("end", dragended));
 
     // Configure the physics simulation for this graph.
-    simulations[visualiser] = d3.forceSimulation()
-        .force("link", d3.forceLink().id(function(d) { return d.id; }).distance(90))
-        .force("charge", d3.forceManyBody().strength(-200))
-        .force("center", d3.forceCenter(width / 2, height / 2));
+    simulations[visualiser] = d3version5.forceSimulation()
+        .force("link", d3version5.forceLink().id(function(d) { return d.id; }).distance(90))
+        .force("charge", d3version5.forceManyBody().strength(-200))
+        .force("center", d3version5.forceCenter(width / 2, height / 2));
 
     // Obtain a label for every node.
     node.append("title")
@@ -422,20 +424,20 @@ function updateVisualiser(visualiser, data) {
 
 // Function called when a drag event on a node begins.
 function dragstarted(d) {
-  if (!d3.event.active) simulations[d.visualiser].alphaTarget(0.3).restart();
+  if (!d3version5.event.active) simulations[d.visualiser].alphaTarget(0.3).restart();
   d.fx = d.x;
   d.fy = d.y;
 }
 
 // Function called as a drag event on a node continues.
 function dragged(d) {
-  d.fx = d3.event.x;
-  d.fy = d3.event.y;
+  d.fx = d3version5.event.x;
+  d.fy = d3version5.event.y;
 }
 
 // Function called when a drag event on a node finishes.
 function dragended(d) {
-  if (!d3.event.active) simulations[d.visualiser].alphaTarget(0);
+  if (!d3version5.event.active) simulations[d.visualiser].alphaTarget(0);
   d.fx = null;
   d.fy = null;
 }
@@ -445,7 +447,7 @@ function dragended(d) {
  *   i : the index of the selected entity in the entity list (unused). */
 function clickedNode(d, i) {
     // Provide a visual indicator of the selection.
-    var entity = d3.select(this);
+    var entity = d3version5.select(this);
     var radius = entity.attr("r");
 
     entity.transition()
