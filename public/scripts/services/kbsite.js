@@ -5,10 +5,10 @@ netGraphService.$inject = [];
 function netGraphService () {
 var serv = this;
 serv.logs = [];
-serv.hi=hello;
+serv.run=run_query;
 
 
-function hello()
+function run_query()
 {
 //alert("hello");
 //query="SELECT DISTINCT ?subject ?property ?object WHERE  {?subject ?property ?object.}";

@@ -1,6 +1,7 @@
 div(ng-show="main.tool == 'sparql'", ng-controller="SparqlCtrl as ctrl", ng-service="netGraphService as netGraph")
   h3(style="text-align: center;", ng-click="ctrl.updateQuery()") Sparql queries
-  i.ml-3.fa.fa-cog(ng-click='main.netGraph.hi()')
+  //i.ml-3.fa.fa-cog(ng-click='main.netGraph.hi()')
+  i.ml-3.fa.fa-play-circle(ng-click='main.netGraph.run()')
   //i.ml-3.fa.fa-cog(ng-click='main.log.download()')
   hr(style="margin: 3px 0px;")
 
