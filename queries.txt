@@ -10,12 +10,11 @@ prefix xsd: <http://www.w3.org/2001/XMLSchema#>
 prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> 
 prefix owl: <http://www.w3.org/2002/07/owl#> 
 
-
-
 select  ?domain ?ri ?name ?rep ?dataset where 
 {
 ?sub_domain rdf:type base:ResearchDomain. 
 ?sub_domain rdfs:label ?domain.
+FILTER(regex(?domain,'atmospheric domain',"I")).
 ?ri rdf:type rm:ResearchInfrastructure .
 ?ri rm:researchDomain ?sub_domain.
 ?ri rm:shortName ?name .
